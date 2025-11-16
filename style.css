@@ -42,6 +42,7 @@ body {
 .new-color {
     color: #4d2727;
     font-size: 20px;
+    cursor: pointer;
 }
 
 #feedbackText {
