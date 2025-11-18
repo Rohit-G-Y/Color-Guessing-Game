@@ -53,6 +53,13 @@ body {
     text-align: center;
 }
 
+#scoreText {
+    color: #4d2727;
+    font-size: 20px;
+    width: 200px;
+    text-align: center;
+}
+
 button {
     border: none;
     font-size: 20px;
@@ -98,6 +105,23 @@ button {
     cursor: pointer;
 }
 
+.no-click {
+    pointer-events: none;
+}
+
+
+@media screen and (max-width: 1000px) {
+    .header-container {
+        height: 40%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .header-container {
+        height: 20%;
+    }
+}
+
 @media screen and (max-width: 640px) {
 
     .color-opt-box {
@@ -106,7 +130,11 @@ button {
     }
 
     .middle-line {
-        flex-direction: column;
+        flex-direction: column-reverse;
+    }
+
+    span {
+        margin: 10px 0px;
     }
 
     #feedbackText {

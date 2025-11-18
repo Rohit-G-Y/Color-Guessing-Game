@@ -6,10 +6,13 @@ let colorCodeQTSText = document.querySelector('.color-qts-code');
 let bottomContainer = document.querySelector('.bottom-container');
 let feedbackText = document.querySelector('#feedbackText');
 let newColor = document.querySelector('.new-color');
-let mainContainer = document.querySelector('.main-container')
+let mainContainer = document.querySelector('.main-container');
+let scoreText = document.querySelector('#scoreid');
 
 let numbBox = 6;
 let correctColor;
+let numberofAttept = 0;
+let scoreResult = '';
 
 function colorGenerator() {
     let rr = Math.floor(Math.random() * 255);
@@ -28,22 +31,35 @@ function colorArrGenerator(number) {
     return randomColorArr;
 }
 
+function getScore(num, mode) {
+    if (mode === 'hard') {
+        scoreResult = num <= 2 ? "Excelent!" : num > 2 && num <= 4 ? "Very Good!" : num == 5 ? "Good Try!" : "Try Again!";
+    }
+    else {
+        scoreResult = num === 1 ? "Excelent!" : num === 2 ? "Very Good!" : "Try Again!";
+    }
+    scoreText.innerHTML = scoreResult === "Excelent!" ? "&#11088; &#11088; &#11088;" : scoreResult === "Very Good!" ? "&#11088; &#11088;" : scoreResult === "Good Try!" ? "&#11088;" : "&#128529; &#128529; &#128529;";
+}
+
+
 function validatingColor(selectedColor, correctColor, target) {
-    // console.log('Selected Color ' + selectedColor);
-    // console.log('Correct Color ' + correctColor);
+    console.log(++numberofAttept);
     if (selectedColor === correctColor) {
         document.querySelectorAll('.color-opt-box').forEach((e) => {
             e.style.backgroundColor = correctColor;
             e.style.opacity = 1;
-            feedbackText.textContent = 'Correct!';
             header.style.backgroundColor = correctColor;
-        })
+            e.classList.add("no-click");
+        });
+        getScore(numberofAttept, easyBtn.classList == 'easyBtn selected' ? 'easy' : 'hard');
+        feedbackText.textContent = scoreResult;
+        numberofAttept = 0;
     }
     else {
         document.querySelectorAll('.color-opt-box').forEach((e) => {
             target.target.style.opacity = 0;
-            feedbackText.textContent = 'Try Again!';
-        })
+        });
+        feedbackText.textContent = 'Try Again!';
     }
 }
 
@@ -71,6 +87,7 @@ function colorGame(num) {
 colorGame(numbBox);
 
 function setUpGame(mode) {
+    scoreText.innerHTML = "";
     header.style.backgroundColor = 'steelblue';
     easyBtn.classList.toggle('selected', mode === 'easy');
     hardBtn.classList.toggle('selected', mode === 'hard');
@@ -85,6 +102,7 @@ function setUpGame(mode) {
             box.style.display = 'block';
             box.style.backgroundColor = color[i];
             box.style.opacity = 1;
+            box.classList.remove("no-click");
         }
         else {
             box.style.display = 'none';
